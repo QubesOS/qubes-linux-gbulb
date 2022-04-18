@@ -1,0 +1,15 @@
+host:
+  rpm:
+    spec:
+    - python3-gbulb.spec
+vm:
+  rpm:
+    spec:
+    - python3-gbulb.spec
+  deb:
+    build:
+    - debian-pkg/debian
+source:
+  files:
+  - url: https://files.pythonhosted.org/packages/source/g/gbulb/gbulb-0.6.1.tar.gz
+    sha256: gbulb-0.6.1.tar.gz.sha256
