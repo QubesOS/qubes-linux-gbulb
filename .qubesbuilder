@@ -1,10 +1,10 @@
 host:
   rpm:
-    spec:
+    build:
     - python3-gbulb.spec
 vm:
   rpm:
-    spec:
+    build:
     - python3-gbulb.spec
   deb:
     build:
