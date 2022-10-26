@@ -1,3 +1,22 @@
+python3-gbulb (0.6.3-1) --release; urgency=medium
+
+  [ Frédéric Pierret (fepitre) ]
+  * Add .gitlab-ci.yml
+  * Drop Travis CI
+  * Download source file directly
+  * Add Qubes Builder v2 integration
+  * .qubesbuilder: replace 'spec' by 'build'
+
+  [ Marek Marczykowski-Górecki ]
+  * Use VERSION tag in URL
+  * Drop patches included upstream already
+  * Update upstream URL
+  * Update doc file names
+  * Gitignore tarball
+  * version 0.6.3
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Wed, 26 Oct 2022 23:13:53 +0200
+
 python3-gbulb (0.6.1-5) unstable; urgency=medium
 
   * Drop socket-related patch
