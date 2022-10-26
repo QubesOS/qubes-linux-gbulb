@@ -11,5 +11,5 @@ vm:
     - debian-pkg/debian
 source:
   files:
-  - url: https://files.pythonhosted.org/packages/source/g/gbulb/gbulb-0.6.1.tar.gz
-    sha256: gbulb-0.6.1.tar.gz.sha256
+  - url: https://files.pythonhosted.org/packages/source/g/gbulb/gbulb-@VERSION@.tar.gz
+    sha256: gbulb-@VERSION@.tar.gz.sha256
