@@ -36,7 +36,7 @@ implementation.
 %py3_install
 
 %files -n python%{python3_pkgversion}-gbulb
-%doc AUTHORS.rst README.md CHANGELOG.md examples 
+%doc AUTHORS.rst README.rst CHANGELOG.rst examples
 %{python3_sitelib}/%{mod_name}*
 
 %changelog
