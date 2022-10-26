@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Paweł Marczewski <pawel@invisiblethingslab.com>
 Build-Depends: debhelper (>= 9), dh-python, python3-all, python3-setuptools, python3-gi, python3-sphinx
 Standards-Version: 3.9.8
-Homepage: https://github.com/nathan-hoad/gbulb
+Homepage: https://github.com/beeware/gbulb
 X-Python3-Version: >= 3.2
 
 Package: python3-gbulb

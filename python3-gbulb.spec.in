@@ -4,7 +4,7 @@
 Name:           python-%{mod_name}
 Version:        @VERSION@
 Release:        @REL@%{?dist}
-Url:            http://github.com/nathan-hoad/gbulb
+Url:            http://github.com/beeware/gbulb
 Summary:        GLib event loop for asyncio (PEP 3156)
 License:        Apache-2.0
 Group:          Development/Languages/Python
