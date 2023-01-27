@@ -9,6 +9,10 @@ vm:
   deb:
     build:
     - debian-pkg/debian
+    source:
+      commands:
+      - '@PLUGINS_DIR@/source_deb/scripts/debian-quilt @SOURCE_DIR@/series-debian.conf @BUILD_DIR@/debian/patches'
+
 source:
   files:
   - url: https://files.pythonhosted.org/packages/source/g/gbulb/gbulb-@VERSION@.tar.gz

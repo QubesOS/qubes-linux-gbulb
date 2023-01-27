@@ -1,0 +1,51 @@
+From f54ab030964e2f1649721ad23e8260b62f5fdaab Mon Sep 17 00:00:00 2001
+From: Russell Keith-Magee <russell@keith-magee.com>
+Date: Tue, 6 Dec 2022 09:08:44 +0800
+Subject: [PATCH 5/6] Update tests to use explicit tasks, not coroutines
+ implied to be tasks.
+
+---
+ tests/test_utils.py | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/tests/test_utils.py b/tests/test_utils.py
+index 4d31d5b..0982216 100644
+--- a/tests/test_utils.py
++++ b/tests/test_utils.py
+@@ -81,7 +81,15 @@ def test_wait_signal(glib_loop):
+         assert r == (t, "frozen brains tell no tales")
+         called = True
+ 
+-    glib_loop.run_until_complete(asyncio.wait([waiter(), emitter()], timeout=1))
++    glib_loop.run_until_complete(
++        asyncio.wait(
++            [
++                glib_loop.create_task(waiter()),
++                glib_loop.create_task(emitter()),
++            ],
++            timeout=1,
++        )
++    )
+ 
+     assert called
+ 
+@@ -122,7 +130,15 @@ def test_wait_signal_cancel(glib_loop):
+         assert r.cancelled()
+         cancelled = True
+ 
+-    glib_loop.run_until_complete(asyncio.wait([waiter(), emitter()], timeout=1))
++    glib_loop.run_until_complete(
++        asyncio.wait(
++            [
++                glib_loop.create_task(waiter()),
++                glib_loop.create_task(emitter()),
++            ],
++            timeout=1,
++        )
++    )
+ 
+     assert cancelled
+     assert called
+-- 
+2.37.3
+

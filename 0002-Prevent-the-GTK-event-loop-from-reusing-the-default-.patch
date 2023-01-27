@@ -1,0 +1,103 @@
+From a04579d25fdedf24ca8c60c84e2683f725683378 Mon Sep 17 00:00:00 2001
+From: Yuki Schlarb <erin-dev@ninetailed.ninja>
+Date: Wed, 12 Oct 2022 22:48:06 +0200
+Subject: [PATCH 2/6] =?UTF-8?q?Prevent=20the=20GTK=C2=A0event=20loop=20fro?=
+ =?UTF-8?q?m=20reusing=20the=20default=20GLib=20main=20context=20for=20eve?=
+ =?UTF-8?q?ry=20instance?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This caused “fun” migration of all scheduled callbacks between event loop
+instances with equally “fun” to debug asyncio low-level exceptions when
+using multi-threading with several concurrently running event loops.
+
+It is completely unclear to the author of this change why the original change
+causes this breakage was introduced in 2015 in commit fde03cde in the first
+place. Perhaps the intention was merely to use the GLib default main context
+on the default main loop instance? Or perhaps its supposed to be shared between
+all instances of the main loop on the UI/main thread (some kind of recursion
+workaround maybe)?
+---
+ src/gbulb/glib_events.py | 11 ++++++-----
+ src/gbulb/gtk.py         | 16 ++--------------
+ 2 files changed, 8 insertions(+), 19 deletions(-)
+
+diff --git a/src/gbulb/glib_events.py b/src/gbulb/glib_events.py
+index 057eab5..43933b4 100644
+--- a/src/gbulb/glib_events.py
++++ b/src/gbulb/glib_events.py
+@@ -935,6 +935,8 @@ class GLibEventLoopPolicy(events.AbstractEventLoopPolicy):
+     threads by default have no event loop.
+     """
+ 
++    EventLoopCls = GLibEventLoop
++
+     # TODO add a parameter to synchronise with GLib's thread default contexts
+     #   (g_main_context_push_thread_default())
+     def __init__(self, application=None):
+@@ -970,12 +972,11 @@ class GLibEventLoopPolicy(events.AbstractEventLoopPolicy):
+ 
+     def new_event_loop(self):
+         """Create a new event loop and return it."""
+-        if not self._default_loop and isinstance(
+-            threading.current_thread(), threading._MainThread
+-        ):
++        if not self._default_loop and \
++           threading.main_thread().ident == threading.get_ident():
+             loop = self.get_default_loop()
+         else:
+-            loop = GLibEventLoop()
++            loop = self.EventLoopCls()
+         loop._policy = self
+ 
+         return loop
+@@ -987,7 +988,7 @@ class GLibEventLoopPolicy(events.AbstractEventLoopPolicy):
+         return self._default_loop
+ 
+     def _new_default_loop(self):
+-        loop = GLibEventLoop(
++        loop = self.EventLoopCls(
+             context=GLib.main_context_default(), application=self._application
+         )
+         loop._policy = self
+diff --git a/src/gbulb/gtk.py b/src/gbulb/gtk.py
+index 1227264..48f375d 100644
+--- a/src/gbulb/gtk.py
++++ b/src/gbulb/gtk.py
+@@ -1,6 +1,6 @@
+ import threading
+ 
+-from gi.repository import GLib, Gtk
++from gi.repository import Gtk
+ 
+ from .glib_events import GLibEventLoop, GLibEventLoopPolicy
+ 
+@@ -17,7 +17,6 @@ class GtkEventLoop(GLibEventLoop):
+     def __init__(self, **kwargs):
+         self._recursive = 0
+         self._recurselock = threading.Lock()
+-        kwargs["context"] = GLib.main_context_default()
+ 
+         super().__init__(**kwargs)
+ 
+@@ -55,15 +54,4 @@ class GtkEventLoop(GLibEventLoop):
+ class GtkEventLoopPolicy(GLibEventLoopPolicy):
+     """Gtk-based event loop policy. Use this if you are using Gtk."""
+ 
+-    def _new_default_loop(self):
+-        loop = GtkEventLoop(application=self._application)
+-        loop._policy = self
+-        return loop
+-
+-    def new_event_loop(self):
+-        if not self._default_loop:
+-            loop = self.get_default_loop()
+-        else:
+-            loop = GtkEventLoop()
+-        loop._policy = self
+-        return loop
++    EventLoopCls = GtkEventLoop
+-- 
+2.37.3
+

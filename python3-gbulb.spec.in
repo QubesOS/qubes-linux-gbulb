@@ -9,6 +9,13 @@ Summary:        GLib event loop for asyncio (PEP 3156)
 License:        Apache-2.0
 Group:          Development/Languages/Python
 Source:         https://files.pythonhosted.org/packages/92/cb/d2a0e4899cde5aa797e31d77a0a7422dcd188d880bb38d0e9d1b1196e5c6/%{mod_name}-%{version}.tar.gz
+Patch1: 0001-Correct-markup-on-links-in-changelog.patch
+Patch2: 0002-Prevent-the-GTK-event-loop-from-reusing-the-default-.patch
+Patch3: 0003-Apply-pre-commit-changes.patch
+Patch4: 0004-Minor-readme-updates.patch
+Patch5: 0005-Update-tests-to-use-explicit-tasks-not-coroutines-im.patch
+Patch6: 0006-Add-support-for-ssl-timeout-parameters.patch
+
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{mod_name}}
