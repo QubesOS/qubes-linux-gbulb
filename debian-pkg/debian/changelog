@@ -1,3 +1,9 @@
+python3-gbulb (0.6.3-2) unstable; urgency=medium
+
+  * Backport Python 3.11 support
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Sat, 28 Jan 2023 03:53:09 +0100
+
 python3-gbulb (0.6.3-1) --release; urgency=medium
 
   [ Frédéric Pierret (fepitre) ]
