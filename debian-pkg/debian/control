@@ -2,7 +2,15 @@ Source: python3-gbulb
 Section: python
 Priority: optional
 Maintainer: Paweł Marczewski <pawel@invisiblethingslab.com>
-Build-Depends: debhelper (>= 9), dh-python, python3-all, python3-setuptools, python3-gi, python3-sphinx
+Build-Depends:
+ debhelper (>= 10),
+ dh-python,
+ pybuild-plugin-pyproject,
+ python3-all,
+ python3-setuptools,
+ python3-setuptools-scm,
+ python3-gi,
+ python3-sphinx
 Standards-Version: 3.9.8
 Homepage: https://github.com/beeware/gbulb
 X-Python3-Version: >= 3.2
