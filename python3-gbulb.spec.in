@@ -9,8 +9,6 @@ Summary:        GLib event loop for asyncio (PEP 3156)
 License:        Apache-2.0
 Group:          Development/Languages/Python
 Source:         https://files.pythonhosted.org/packages/92/cb/d2a0e4899cde5aa797e31d77a0a7422dcd188d880bb38d0e9d1b1196e5c6/%{mod_name}-%{version}.tar.gz
-Patch1: 0001-Fix-compatibility-with-Python-3.13.patch
-Patch2: 0001-Change-one-remaining-_buffer_empty_callbacks-to-_dra.patch
 
 BuildRequires:  gtk3-devel
 BuildRequires:  git
