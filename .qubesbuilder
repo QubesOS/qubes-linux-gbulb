@@ -2,10 +2,11 @@ host:
   rpm:
     build:
     - python3-gbulb.spec
-vm:
+vm-fc41:
   rpm:
     build:
     - python3-gbulb.spec
+vm:
   deb:
     build:
     - debian-pkg/debian
