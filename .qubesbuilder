@@ -6,7 +6,14 @@ vm-fc41:
   rpm:
     build:
     - python3-gbulb.spec
-vm:
+vm-bookworm:
+  deb:
+    build:
+    - debian-pkg/debian
+    source:
+      commands:
+      - '@PLUGINS_DIR@/source_deb/scripts/debian-quilt @SOURCE_DIR@/series-debian.conf @BUILD_DIR@/debian/patches'
+vm-trixie:
   deb:
     build:
     - debian-pkg/debian
