@@ -1,3 +1,9 @@
+python3-gbulb (0.6.6-3) unstable; urgency=medium
+
+  * Disable building on Debian forky and newer
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Tue, 01 Sep 2026 13:36:32 +0200
+
 python3-gbulb (0.6.6-2) unstable; urgency=medium
 
   * Disable building on F42+
